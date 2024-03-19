@@ -22,17 +22,90 @@ namespace BulkyWebOne.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if(ModelState.IsValid)
+
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
-                _db.Categories.Add(obj);
+                ModelState.AddModelError("name", "The Display Order can not exacly match the name");
+
+            }
+
+            if (ModelState.IsValid)
+                {
+                    _db.Categories.Add(obj);
+                    _db.SaveChanges();
+                TempData["success"] = "Category Created Successfully";
+                return RedirectToAction("Index");
+            }
+             return View();
+        }
+        public IActionResult Edit(int? id)
+        {
+            if(id==null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? CategoryFromDb = _db.Categories.Find(id);
+            //Category? CategoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
+           // Category? CategoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
+
+            if (CategoryFromDb == null) 
+            {
+                return NotFound();
+
+            }
+            return View(CategoryFromDb);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index");
             }
             return View();
-            
         }
-    }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? CategoryFromDb = _db.Categories.Find(id);
+            //Category? CategoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
+            // Category? CategoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
+
+            if (CategoryFromDb == null)
+            {
+                return NotFound();
+
+            }
+            return View(CategoryFromDb);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+
+            Category? obj=_db.Categories.Find(id);
+            if(obj==null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Category Deleted Successfully";
+            return RedirectToAction("index");                                  
+        }
+    }//end class
 }
+

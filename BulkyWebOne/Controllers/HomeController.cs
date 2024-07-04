@@ -22,6 +22,11 @@ namespace BulkyWebOne.Controllers
         {
             return View();
         }
+        public IActionResult BootPractice()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

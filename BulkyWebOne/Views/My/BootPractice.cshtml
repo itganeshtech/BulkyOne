@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row pt-4">
+            <div class="col text-left">
+                <h2 class="text-primary">Student Information Form</h2>
+            </div>
+        </div>
+        <div class="formbody">
+            <div class=" row pt-2">
+                <div class="col-6">
+                    <label for="studentName">Student Name:</label>
+                </div>
+
+                <div class="col-6">
+                    <input type="text" id="studentName" name="StudentName" maxlength="200">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label for="fatherName">Father's Name:</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" id="fatherName" name="FatherName" maxlength="100">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <label for="fatherMobile">Father's Mobile:</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" id="fatherMobile" name="FatherMobile" maxlength="20">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <label for="fatherDesig">Father's Designation:</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" id="fatherDesig" name="FatherDesig" maxlength="100">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="fatherSalary">Father's Salary:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="number" id="fatherSalary" name="FatherSalary" step="0.01">
+                </div>
+            </div>
+
+
+
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="motherName">Mother's Name:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="text" id="motherName" name="MotherName" maxlength="100">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="motherMobile">Mother's Mobile:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="text" id="motherMobile" name="MotherMobile" maxlength="20">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentClass">Class:</label>
+
+                </div>
+                <div class="col-6">
+
+                    <input type="text" id="studentClass" name="StudentClass" maxlength="50">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentSection">Section:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="text" id="studentSection" name="StudentSection" maxlength="10">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentDob">Date of Birth:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="date" id="studentDob" name="StudentDob">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentDoj">Date of Joining:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="date" id="studentDoj" name="StudentDoj">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentSchoolLeavingYear">School Leaving Year:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="number" id="studentSchoolLeavingYear" name="StudentSchoolLeavingYear">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentAddress">Address:</label>
+
+                </div>
+                <div class="col-6">
+                    <textarea id="studentAddress" name="StudentAddress" maxlength="200"></textarea>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <label for="studentReligion">Religion:</label>
+
+                </div>
+                <div class="col-6">
+                    <input type="text" id="studentReligion" name="StudentReligion" maxlength="50">
+                </div>
+            </div>
+
+
+
+
+        </div> @*end formbody div            *@
+
+
+        <div class="formbottom"></div>
+    </div>
+
+
+
+
+
+    @*  <form action="/submit-student" method="POST">
+
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+
+    <br>
+    <br>
+
+    <label for="studentCast">Cast:</label>
+    <input type="text" id="studentCast" name="StudentCast" maxlength="50">
+    <br>
+    <br>
+
+    <label for="studentGender">Gender:</label>
+    <input type="text" id="studentGender" name="StudentGender" maxlength="10">
+    <br>
+    <br>
+
+    <label for="studentNationality">Nationality:</label>
+    <input type="text" id="studentNationality" name="StudentNationality" maxlength="50">
+    <br>
+    <br>
+
+    <label for="studentEmail">Email:</label>
+    <input type="email" id="studentEmail" name="StudentEmail" maxlength="100">
+    <br>
+    <br>
+
+    <label for="studentHouse">House:</label>
+    <input type="text" id="studentHouse" name="StudentHouse" maxlength="50">
+    <br>
+    <br>
+
+    <label for="studentAdharNumber">Aadhar Number:</label>
+    <input type="text" id="studentAdharNumber" name="StudentAdharNumber" maxlength="20">
+    <br>
+    <br>
+
+    <label for="studentPenNumber">PEN Number:</label>
+    <input type="text" id="studentPenNumber" name="StudentPenNumber" maxlength="20">
+    <br>
+    <br>
+    </fieldset>
+
+    <!-- Class Information -->
+
+
+    <label for="className">Class Name:</label>
+    <input type="text" id="className" name="ClassName" maxlength="50" required>
+    <br>
+
+
+    <br>
+    <input type="submit" value="Submit">
+
+    </form> *@
+</body>
+</html>
+
+

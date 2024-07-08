@@ -1,4 +1,4 @@
-namespace BulkyWebOne.Models
+namespace Bulky.Models
 {
     public class ErrorViewModel
     {

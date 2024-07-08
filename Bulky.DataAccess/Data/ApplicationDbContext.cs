@@ -1,7 +1,8 @@
-﻿using BulkyWebOne.Models;
+﻿
+using Bulky.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyWebOne.Data
+namespace Bulky.DataAccess.Data
 {
     public class ApplicationDbContext:DbContext
     {

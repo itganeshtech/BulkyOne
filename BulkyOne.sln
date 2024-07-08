@@ -5,11 +5,11 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyWebOne", "BulkyWebOne\BulkyWebOne.csproj", "{5FD011E7-D543-429D-9AF5-94D9B9272968}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulky.DataAccess", "Bulky.DataAccess\Bulky.DataAccess.csproj", "{786184CD-4B98-41CF-B2A0-A20D92C0110E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bulky.DataAccess", "Bulky.DataAccess\Bulky.DataAccess.csproj", "{786184CD-4B98-41CF-B2A0-A20D92C0110E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulky.Models", "Bulky.Models\Bulky.Models.csproj", "{6E2A540A-45AB-4D03-9A63-5F89AC7AA530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bulky.Models", "Bulky.Models\Bulky.Models.csproj", "{6E2A540A-45AB-4D03-9A63-5F89AC7AA530}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulky.Utility", "Bulky.Utility\Bulky.Utility.csproj", "{E07B0EC5-2E11-496B-A35A-D4242DAEB699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bulky.Utility", "Bulky.Utility\Bulky.Utility.csproj", "{E07B0EC5-2E11-496B-A35A-D4242DAEB699}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

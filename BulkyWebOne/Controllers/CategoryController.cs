@@ -32,6 +32,11 @@ namespace BulkyWebOne.Controllers
                 ModelState.AddModelError("name", "The Display Order can not exacly match the name");
 
             }
+            if (obj.Name!=null && obj.Name.ToLower() =="test")
+            {
+                ModelState.AddModelError("", "Test is an invalid value");
+
+            }
 
             if (ModelState.IsValid)
                 {

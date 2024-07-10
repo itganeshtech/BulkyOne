@@ -1,4 +1,6 @@
 ﻿using Bulky.DataAccess.Data;
+using Bulky.DataAccess.Repository;
+using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,15 +8,15 @@ namespace BulkyWebOne.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db=db;   
+            _unitOfWork = unitOfWork;   
         }
 
         public IActionResult Index()
         {
-           List<Category> objCategoryList=_db.Categories.ToList();
+           List<Category> objCategoryList= _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -40,8 +42,8 @@ namespace BulkyWebOne.Controllers
 
             if (ModelState.IsValid)
                 {
-                    _db.Categories.Add(obj);
-                    _db.SaveChanges();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Created Successfully";
                 return RedirectToAction("Index");
             }
@@ -53,7 +55,7 @@ namespace BulkyWebOne.Controllers
             {
                 return NotFound();
             }
-            Category? CategoryFromDb = _db.Categories.Find(id);
+            Category? CategoryFromDb = _unitOfWork.Category.Get(u=>u.Id==id);
             //Category? CategoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
            // Category? CategoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 
@@ -71,8 +73,8 @@ namespace BulkyWebOne.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index");
             }
@@ -85,14 +87,13 @@ namespace BulkyWebOne.Controllers
             {
                 return NotFound();
             }
-            Category? CategoryFromDb = _db.Categories.Find(id);
+            Category? CategoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
             //Category? CategoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
             // Category? CategoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 
             if (CategoryFromDb == null)
             {
                 return NotFound();
-
             }
             return View(CategoryFromDb);
         }
@@ -101,13 +102,13 @@ namespace BulkyWebOne.Controllers
         public IActionResult DeletePOST(int? id)
         {
 
-            Category? obj=_db.Categories.Find(id);
+            Category? obj= _unitOfWork.Category.Get(u => u.Id == id);
             if(obj==null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("index");                                  
         }

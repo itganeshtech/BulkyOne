@@ -2,8 +2,9 @@ using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BulkyWebOne.Controllers
+namespace BulkyWebOne.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,7 +23,7 @@ namespace BulkyWebOne.Controllers
         {
             return View();
         }
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

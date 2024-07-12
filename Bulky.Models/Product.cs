@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,12 @@ namespace Bulky.Models
         [Range(1, 10000)]
         public double Price100 { get; set; }
 
+        // Foreign key
+        public int CategoryId { get; set; }
 
+        // Navigation property
+        public virtual Category Category { get; set; }
+
+        public string Quality { get; set; }
     }
 }

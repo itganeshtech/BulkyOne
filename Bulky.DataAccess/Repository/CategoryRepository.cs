@@ -22,7 +22,6 @@ namespace Bulky.DataAccess.Repository
         public void Update(Category obj)
         {
             _db.Categories.Update(obj);
-            
         }
     }
 

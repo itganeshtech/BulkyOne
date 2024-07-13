@@ -10,25 +10,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bulky.DataAccess.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository <T>: IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _db;
         internal DbSet<T> dbSet;
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            this.dbSet = _db.Set<T>();                       
         }
         public void Add(T entity)
         {
-            _db.Add(entity);
-        }
-
-        public T Get(Expression<Func<T, bool>> filter)
-        {
-            IQueryable<T> query = dbSet;
-            query=query.Where(filter);
-            return query.FirstOrDefault();
+            dbSet.Add(entity);
+            
         }
 
         public IEnumerable<T> GetAll()
@@ -37,10 +31,19 @@ namespace Bulky.DataAccess.Repository
             return query.ToList();
         }
 
+        public T Get(Expression<Func<T, bool>> filter)
+        {
+            IQueryable<T> query=dbSet;
+            query = query.Where(filter);
+            return query.FirstOrDefault();
+        }
+
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
+
         }
+
         public void RemoveRange(IEnumerable<T> entities)
         {
             dbSet.RemoveRange(entities);

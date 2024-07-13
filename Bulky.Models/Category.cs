@@ -14,6 +14,5 @@ namespace Bulky.Models
         [DisplayName("Category Order")]
         [Range(1,100,ErrorMessage="Display order range should be from 1 to 100")]
         public int DisplayOrder { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
     }
 }

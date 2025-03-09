@@ -160,6 +160,19 @@ namespace BulkyWebOne.Areas.Admin.Controllers
             TempData["success"] = "Product Deleted Successfully";
             return RedirectToAction("index");
         }
+
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objProductList });
+        }
+
+        #endregion
+
     }//end class
-}
+}//end namespace
 

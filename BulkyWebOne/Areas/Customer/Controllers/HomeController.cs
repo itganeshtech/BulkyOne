@@ -41,7 +41,8 @@ namespace BulkyWebOne.Areas.Customer.Controllers
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claimsIdentity=(ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = userId;
 

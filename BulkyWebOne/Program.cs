@@ -23,7 +23,6 @@ builder.Services.ConfigureApplicationCookie(options => {
 });
 
 builder.Services.AddRazorPages();
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 

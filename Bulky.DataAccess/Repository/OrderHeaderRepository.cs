@@ -2,6 +2,7 @@
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +10,17 @@ using System.Threading.Tasks;
 
 namespace Bulky.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    class OrderHeaderRepository:Repository<OrderHeader>,IOrderHeaderRepository
     {
         private readonly ApplicationDbContext _db;
-
-        public CategoryRepository(ApplicationDbContext db) : base(db)
+        public OrderHeaderRepository(ApplicationDbContext db):base(db) 
         {
-            _db = db;
+            _db = db;   
         }
-                  
-
-        public void Update(Category obj)
+        public void Update(OrderHeader obj)
         {
-            _db.Categories.Update(obj);
-            
+            _db.OrderHeaders.Update(obj);
+
         }
     }
-
 }

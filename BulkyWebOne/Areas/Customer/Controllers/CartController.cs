@@ -80,9 +80,13 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+        public IActionResult Summery()
+        {
+            return View();
+        }
 
 
-            private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
+        private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
             {
                 if (shoppingCart.Count <= 50)
                 {
@@ -100,6 +104,7 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                     }
                 }
             }
+        
 
-        }//End Class    
+    }//End Class    
 }//End Controller

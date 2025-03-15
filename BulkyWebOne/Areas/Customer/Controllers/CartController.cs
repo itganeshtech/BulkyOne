@@ -19,8 +19,7 @@ namespace BulkyWebOne.Areas.Customer.Controllers
             private readonly IUnitOfWork _unitOfWork;
 
         [BindProperty]    
-        public ShoppingCartVM ShoppingCartVM { get; set; }
-        public object ShoopingCartVM { get; private set; }
+        public ShoppingCartVM ShoppingCartVM { get; set; }       
 
         public CartController(IUnitOfWork unitOfWork)
             {
@@ -40,8 +39,8 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                 ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
                 includeProperties: "Product"),
                 OrderHeader = new()
-            };
-
+            };            
+            
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
                 {
                     cart.Price = GetPriceBasedOnQuantity(cart);
@@ -98,6 +97,14 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                  includeProperties: "Product"),
                 OrderHeader = new()
             };
+            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+
+            ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
+            ShoppingCartVM.OrderHeader.PhoneNumber = ShoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
+            ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAddress;
+            ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
+            ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
+            ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
 
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
@@ -122,6 +129,8 @@ namespace BulkyWebOne.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
+            ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
@@ -129,15 +138,15 @@ namespace BulkyWebOne.Areas.Customer.Controllers
             }
 
 
-            if (ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
-                //Regular cutomer so payment method should be applied.
+                //it is a regular customer 
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
             }
             else
             {
-                //Company customer so payment method should not be applied.
+                //it is a company user
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
             }
@@ -145,7 +154,7 @@ namespace BulkyWebOne.Areas.Customer.Controllers
             _unitOfWork.Save();
 
 
-            foreach (ShoppingCart cart in ShoppingCartVM.ShoppingCartList)
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 OrderDetail orderDetail = new()
                 {
@@ -156,13 +165,19 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                 };
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
-            }  
-            return View(ShoppingCartVM);
+            }
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                //it is a regular customer account and we need to capture payment
+                //stripe logic
+            }
+
+            return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
 
         public IActionResult OrderConfirmation(int id)
         {
-            return View();
+            return View(id);
         }
 
 

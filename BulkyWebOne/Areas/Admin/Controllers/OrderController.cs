@@ -1,5 +1,6 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -20,6 +21,15 @@ namespace BulkyWebOne.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Details(int orderId)
+        {
+            OrderVM orderVM= new()
+            {
+                OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
+                OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
+            };
+            return View(orderVM);
+        }
         #region API CALLS
 
         [HttpGet]
@@ -44,14 +54,9 @@ namespace BulkyWebOne.Areas.Admin.Controllers
                     break;
                 default:
                     break;
-
             }
-
-
             return Json(new { data = objOrderHeaders });
         }
-
-
         #endregion
     }
 }

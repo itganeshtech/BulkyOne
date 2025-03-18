@@ -9,6 +9,7 @@ namespace Bulky.Models.ViewModels
     public class OrderVM
     {
         public OrderHeader OrderHeader { get; set; }
-        public IEnumerable<OrderDetail> OrderDetail { get; set; }
+        public IEnumerable<OrderDetail> OrderDetail { get; set; } //comment is added for forcing Git to change
+
     }
 }

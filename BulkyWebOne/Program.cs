@@ -2,9 +2,13 @@ using Bulky.DataAccess.Data;
 using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Utility;
+using Razorpay.Api;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,21 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.Configure<RazorpaySettings>(builder.Configuration.GetSection("Razorpay"));
+
+//Bind Razorpay configuration
+var razorpaySettings = builder.Configuration.GetSection("Razorpay").Get<RazorpaySettings>();
+if (razorpaySettings != null)
+{
+    Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient(razorpaySettings.Key, razorpaySettings.Secret);
+}
+
+
+// Add Razorpay client to dependency injection if needed
+builder.Services.AddSingleton<Razorpay.Api.RazorpayClient>(sp =>
+    new Razorpay.Api.RazorpayClient(razorpaySettings.Key, razorpaySettings.Secret));
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 

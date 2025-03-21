@@ -1,9 +1,11 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using System.Security.Claims;
 
 namespace BulkyWebOne.Areas.Admin.Controllers
@@ -93,6 +95,36 @@ namespace BulkyWebOne.Areas.Admin.Controllers
             _unitOfWork.Save();
             TempData["Success"] = "Order Shipped Successfully.";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });            
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+       public IActionResult CancelOrder()
+        {
+
+        //    var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+
+        //    if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
+        //    {
+        //        var options = new RefundCreateOptions
+        //        {
+        //            Reason = RefundReasons.RequestedByCustomer,
+        //            PaymentIntent = orderHeader.PaymentIntentId
+        //        };
+
+        //        var service = new RefundService();
+        //        Refund refund = service.Create(options);
+
+        //        _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusRefunded);
+        //    }
+        //    else
+        //    {
+        //        _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
+        //    }
+        //    _unitOfWork.Save();
+        //    TempData["Success"] = "Order Cancelled Successfully.";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+
         }
 
 

@@ -20,17 +20,14 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.Configure<RazorpaySettings>(builder.Configuration.GetSection("Razorpay"));
 
-//Bind Razorpay configuration
-var razorpaySettings = builder.Configuration.GetSection("Razorpay").Get<RazorpaySettings>();
-if (razorpaySettings != null)
-{
-    Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient(razorpaySettings.Key, razorpaySettings.Secret);
-}
+//  Configure Razorpay Client in 2 lines like Stripe
+RazorpayClient client = new RazorpayClient(
+    builder.Configuration["Razorpay:Key"],
+    builder.Configuration["Razorpay:Secret"]
+);
 
-
-// Add Razorpay client to dependency injection if needed
-builder.Services.AddSingleton<Razorpay.Api.RazorpayClient>(sp =>
-    new Razorpay.Api.RazorpayClient(razorpaySettings.Key, razorpaySettings.Secret));
+// Register RazorpayClient
+builder.Services.AddSingleton(client);
 
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();

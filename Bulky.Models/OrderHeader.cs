@@ -29,21 +29,23 @@ namespace Bulky.Models
         public DateTime PaymentDate { get; set; }
         public DateOnly PaymentDueDate { get; set; }
 
-        public string? SessionId { get; set; }
+        //public string? SessionId { get; set; }
+        // Updated from SessionId to OrderId for Razorpay
+        public string? OrderId { get; set; }
         public string? PaymentIntentId { get; set; }
 
         [Required]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [Required]
-        public string StreetAddress { get; set; }
+        public string? StreetAddress { get; set; }
         [Required]
-        public string City { get; set; }
+        public string? City { get; set; }
         [Required]
-        public string State { get; set; }
+        public string? State { get; set; }
         [Required]
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
     }
 }

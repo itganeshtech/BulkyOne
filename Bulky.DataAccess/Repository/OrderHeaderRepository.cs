@@ -36,12 +36,12 @@ namespace Bulky.DataAccess.Repository
             }
         }
 
-        public void UpdateStripePaymentID(int id, string sessionId, string paymentIntentId)
+        public void UpdateRazporpay_PaymentID(int id, string orderId, string paymentIntentId)
         {
             var orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id == id);
-            if (!string.IsNullOrEmpty(sessionId))
+            if (!string.IsNullOrEmpty(orderId))
             {
-                orderFromDb.SessionId = sessionId;
+                orderFromDb.OrderId = orderId;
             }
             if (!string.IsNullOrEmpty(paymentIntentId))
             {

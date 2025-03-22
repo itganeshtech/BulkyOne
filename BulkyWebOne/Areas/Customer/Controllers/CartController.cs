@@ -3,10 +3,12 @@ using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
+using Razorpay.Api;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.Extensions.Options;
 
 namespace BulkyWebOne.Areas.Customer.Controllers
 {
@@ -17,6 +19,8 @@ namespace BulkyWebOne.Areas.Customer.Controllers
         {
 
             private readonly IUnitOfWork _unitOfWork;
+        private readonly RazorpaySettings _razorpaySettings;
+
 
         [BindProperty]    
         public ShoppingCartVM ShoppingCartVM { get; set; }       
@@ -116,13 +120,15 @@ namespace BulkyWebOne.Areas.Customer.Controllers
             return View(ShoppingCartVM);
         }
 
+
+
         [HttpPost]
         [ActionName("Summary")]
         public IActionResult SummaryPOST()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
+            
 
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
             includeProperties: "Product");
@@ -166,14 +172,33 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
             }
+
+            
+
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //it is a regular customer account and we need to capture payment
-                //stripe logic
+                //Razorpay  logic
+                var domain = "https://localhost:7169/";
+                Dictionary<string, object> options = new Dictionary<string, object>();
+                options.Add("amount", 100); // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                options.Add("currency", "INR");
+                options.Add("receipt", "receipt#1");
+                //options.Add("receipt", "order_rcptid_" + ShoppingCartVM.OrderHeader.Id);
+                options.Add("payment_capture", 1);
 
 
+                //Below is the code without Dependency Injection
+                //RazorpayClient client = new RazorpayClient("Razorpay.Key", "Razorpay.Secret");
 
-
+                //Below is the code with Dependency Injection
+                RazorpayClient client = new RazorpayClient(_razorpaySettings.Key, _razorpaySettings.Secret);
+                
+                Razorpay.Api.Order order = client.Order.Create(options);
+                ShoppingCartVM.OrderHeader.OrderId = order["id"].ToString();
+                _unitOfWork.OrderHeader.Update(ShoppingCartVM.OrderHeader);
+                _unitOfWork.Save();
+               
             }
 
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });

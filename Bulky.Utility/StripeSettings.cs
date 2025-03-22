@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bulky.Utility
 {
-    public class RazorpaySettings
+    public class StripeSettings
     {
-        public string Key { get; set; }
-        public string Secret { get; set; }
+        public string SecretKey { get; set; }
+        public string PublishableKey { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿@model ShoppingCartVM
+
+
 <form method="post">
 	<br />
 	<div class="container">
@@ -8,7 +10,7 @@
 				<div class="row px-4">
 					<div class="col-6">
 						<h5 class="pt-2 text-white">
-							Shopping Cart
+							Order Summary
 						</h5>
 					</div>
 					<div class="col-6 text-end">
@@ -90,9 +92,9 @@
 									<li class="list-group-item d-flex justify-content-between">
 										<div>
 											<h6 class="my-0">@details.Product.Title</h6>
-											<small class="text-muted">Quantity:@details.Count</small>
+											<small class="text-muted">Quantity: @details.Count</small>
 										</div>
-										<span class="text-muted">@((details.Price*details.Count).ToString("c")) </span>
+										<span class="text-muted">@((details.Price * details.Count).ToString("c")) </span>
 									</li>
 								}
 
@@ -109,8 +111,8 @@
 				<div class="row">
 					<div class="col-12 col-md-8 pt-2">
 						<p style="color:maroon; font-size:14px;">
-							Estimate Arrival Date:@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
-
+							Estimate Arrival Date:
+							@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
 						</p>
 					</div>
 					<div class="col-12 col-md-4">

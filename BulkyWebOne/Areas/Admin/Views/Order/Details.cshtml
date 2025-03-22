@@ -1,6 +1,6 @@
 ﻿@model OrderVM
 <form method="post">
-    <input asp-for="OrderHeader.Id" type="hidden" />
+    <input asp-for="OrderHeader.Id" hidden />
     <br />
     <div class="container">
         <div class="card">
@@ -159,7 +159,7 @@
                                     <div class="col-3">Session ID</div>
                                     <div class="col-9">
 
-                                        @* <input asp-for="OrderHeader.SessionId" readonly type="text" class="form-control" /> *@
+                                        <input asp-for="OrderHeader.SessionId" readonly type="text" class="form-control" />
 
                                     </div>
                                 </div>
@@ -174,14 +174,14 @@
                             }
                             <div class="row my-1">
 
-                               @*  @if (Model.OrderHeader.SessionId == null)
+                                @if (Model.OrderHeader.SessionId == null)
                                 {
                                     <div class="col-3">Payment Due Date</div>
                                     <div class="col-9">
                                         <input value="@Model.OrderHeader.PaymentDueDate.ToShortDateString()" readonly type="text" class="form-control" />
                                     </div>
 
-                                } *@
+                                }
                                 else
                                 {
                                     <div class="col-3">Payment Date</div>
@@ -211,14 +211,13 @@
                             <ul class="list-group mb-3">
                                 @foreach (var detail in Model.OrderDetail)
                                 {
-
                                     <li class="list-group-item d-flex justify-content-between p-2">
                                         <div class="row container">
                                             <div class="col-8">
 
                                                 <h6 class="my-0 text-primary">@detail.Product.Title</h6>
                                                 <small class="text-muted">Price : @detail.Price.ToString("c")</small><br />
-                                                <small class="text-muted">Quantity :@detail.Count</small>
+                                                <small class="text-muted">Quantity : @detail.Count</small>
                                             </div>
                                             <div class="col-4 text-end">
                                                 <p class="text-success">@((detail.Count * detail.Price).ToString("c"))</p>
@@ -226,7 +225,6 @@
                                         </div>
                                     </li>
                                 }
-
                                 <li class="list-group-item bg-primary">
                                     <div class="row container">
                                         <div class="col-6">
@@ -244,12 +242,14 @@
                             {
                                 <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
                             }
-
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
                                 {
-                                    <button type="submit" asp-action="StartProcessing" class="btn btn-primary form-control my-1">Start Processing</button>
+                                    <button type="submit" asp-action="StartProcessing"
+                                            class="btn btn-primary form-control my-1">
+                                        Start Processing
+                                    </button>
                                 }
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
                                 {
@@ -263,7 +263,6 @@
                                     <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
                                 }
                             }
-
                         </div>
                     </div>
                 </div>
@@ -271,28 +270,31 @@
         </div>
     </div>
 </form>
- @section Scripts {
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
     <script>
-          function validateInput() 
-          {
-           if(document.getElementById("trackingNumber").value=="")
-           {
+        function validateInput(){
+            if(document.getElementById("trackingNumber").value==""){
                 Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Please enter tracking number!',
-                }); return false;
-           }
-           if (document.getElementById("carrier").value =="") 
-           {
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Please enter carrier!',
-              });
-              return false;
-          }
-        return true;
-          }
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter tracking number!',
+                });
+                return false;
+            }
+            if (document.getElementById("carrier").value =="") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter carrier!',
+                });
+                return false;
+            }
+            return true;
+        }
     </script>
-} 
+
+}

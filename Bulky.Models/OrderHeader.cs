@@ -29,9 +29,8 @@ namespace Bulky.Models
         public DateTime PaymentDate { get; set; }
         public DateOnly PaymentDueDate { get; set; }
 
-        //public string? SessionId { get; set; }
-        // Updated from SessionId to OrderId for Razorpay
-        public string? OrderId { get; set; }
+        public string? SessionId { get; set; }
+        
         public string? PaymentIntentId { get; set; }
 
         [Required]

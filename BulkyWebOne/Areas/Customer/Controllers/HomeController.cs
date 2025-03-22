@@ -41,13 +41,13 @@ namespace BulkyWebOne.Areas.Customer.Controllers
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
-            var claimsIdentity=(ClaimsIdentity)User.Identity;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = userId;
 
-            //_unitOfWork.ShoppingCart.Add(shoppingCart);
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId &&
-             u.ProductId == shoppingCart.ProductId);
+            u.ProductId == shoppingCart.ProductId);
+
             if (cartFromDb != null)
             {
                 //shopping cart exists
@@ -59,8 +59,10 @@ namespace BulkyWebOne.Areas.Customer.Controllers
                 //add cart record
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
             }
+            TempData["success"] = "Cart updated successfully";
 
             _unitOfWork.Save();
+
 
             return RedirectToAction(nameof(Index));
         }
